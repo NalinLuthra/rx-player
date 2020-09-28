@@ -92,8 +92,8 @@
     - [ErrorCodes](#static-ErrorCodes)
     - [LogLevel](#static-LogLevel)
 - [Tools](#tools)
+    - [TextTrackRenderer](#tools-textTrackRenderer)
     - [Experimental - MediaCapabilitiesProber](#tools-mediaCapabilitiesProber)
-    - [Experimental - TextTrackRenderer](#tools-textTrackRenderer)
     - [Experimental - parseBifThumbnails](#tools-parseBifThumbnails)
     - [Experimental - createMetaplaylist](#tools-createMetaplaylist)
 
@@ -2541,14 +2541,6 @@ You can find its documentation [here](./mediaCapabilitiesProber.md).
 
 <a name="tools-textTrackRenderer"></a>
 ### TextTrackRenderer ##########################################################
-
---
-
-:warning: This tool is experimental. This only means that its API can change at
-any new RxPlayer version (with all the details in the corresponding release
-note).
-
---
 
 The TextTrackRenderer allows to easily render subtitles synchronized to a video
 element.
