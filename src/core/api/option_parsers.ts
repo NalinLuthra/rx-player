@@ -90,6 +90,8 @@ export interface ITransportOptions {
   referenceDateTime? : number;
   /** Allows to synchronize the server's time with the client's. */
   serverSyncInfos? : IServerSyncInfos;
+  /** Allows to adapt the switching audio logic depending the environment */
+  audioTrackSwitchingMode?: string;
 }
 
 /**
@@ -266,6 +268,7 @@ interface IParsedLoadVideoOptionsBase {
   defaultTextTrack : ITextTrackPreference|null|undefined;
   startAt : IParsedStartAtOption|undefined;
   manualBitrateSwitchingMode : "seamless"|"direct";
+  audioTrackSwitchingMode : string;
 }
 
 /**
@@ -547,6 +550,7 @@ function parseLoadVideoOptions(
   const manifestUpdateUrl = options.transportOptions?.manifestUpdateUrl;
   const minimumManifestUpdateInterval =
     options.transportOptions?.minimumManifestUpdateInterval ?? 0;
+  const audioTrackSwitchingMode = options.transportOptions?.audioTrackSwitchingMode ?? "smooth";
 
   const transportOptions = objectAssign({}, transportOptsArg, {
     /* tslint:disable deprecation */
@@ -672,6 +676,7 @@ function parseLoadVideoOptions(
            keySystems,
            lowLatencyMode,
            manualBitrateSwitchingMode,
+           audioTrackSwitchingMode,
            manifestUpdateUrl,
            minimumManifestUpdateInterval,
            networkConfig,

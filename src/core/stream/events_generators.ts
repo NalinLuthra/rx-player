@@ -60,12 +60,14 @@ const EVENTS = {
   adaptationChange(
     bufferType : IBufferType,
     adaptation : Adaptation|null,
-    period : Period
+    period : Period,
+    sourceBufferStatus: "initialized" | "uninitialized" | "disabled"
   ) : IAdaptationChangeEvent {
     return { type: "adaptationChange",
              value : { type: bufferType,
                        adaptation,
-                       period } };
+                       period,
+                       sourceBufferStatus } };
   },
 
   addedSegment<T>(

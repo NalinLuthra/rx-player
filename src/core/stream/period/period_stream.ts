@@ -139,7 +139,11 @@ export default function PeriodStream({
         }
 
         return observableConcat<IPeriodStreamEvent>(
-          cleanBuffer$.pipe(mapTo(EVENTS.adaptationChange(bufferType, null, period))),
+          cleanBuffer$.pipe(
+            mapTo(EVENTS.adaptationChange(bufferType,
+                                          null,
+                                          period,
+                                          sourceBufferStatus.type))),
           createEmptyStream(clock$, wantedBufferAhead$, bufferType, { period })
         );
       }
@@ -186,7 +190,11 @@ export default function PeriodStream({
         }));
 
       return observableConcat<IPeriodStreamEvent>(
-        observableOf(EVENTS.adaptationChange(bufferType, adaptation, period)),
+        observableOf(
+          EVENTS.adaptationChange(bufferType,
+                                  adaptation,
+                                  period,
+                                  sourceBuffersStore.getStatus(bufferType).type)),
         newStream$
       );
     }),

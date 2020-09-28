@@ -107,6 +107,8 @@ export interface IInitializeArguments {
     maxBufferBehind$ : Observable<number>;
     /** Strategy when switching the current bitrate manually (smooth vs reload). */
     manualBitrateSwitchingMode : "seamless" | "direct";
+    /** Stategy when switching of audio track (smooth vs flush vs reload). */
+    audioTrackSwitchingMode : string;
   };
   /** Regularly emit current playback conditions. */
   clock$ : Observable<IInitClockTick>;
@@ -424,6 +426,20 @@ export default function InitializeOnMediaSource(
                 break;
               case "protected-segment":
                 protectedSegments$.next(evt.value);
+                break;
+              case "adaptationChange":
+                if (evt.value.type === "audio" && evt.value.sourceBufferStatus === "initialized") {
+                  const { audioTrackSwitchingMode } = bufferOptions;
+                  if (
+                    audioTrackSwitchingMode === "flush" &&
+                    mediaElement.currentTime + 0.001 < mediaElement.duration
+                    ) {
+                      mediaElement.currentTime += 0.001;
+                  } else if (audioTrackSwitchingMode === "reload") {
+                    reloadMediaSource$.next({ currentTime: mediaElement.currentTime,
+                                              isPaused: mediaElement.paused });
+                  }
+                }
                 break;
             }
           }));

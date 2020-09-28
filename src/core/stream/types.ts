@@ -200,6 +200,12 @@ export interface IAdaptationChangeEvent {
      */
     adaptation : Adaptation |
                  null;
+    /**
+     * "initialized": A SourceBuffer has been created for that type.
+     * "disabled": The SourceBuffer has been explicitely disabled for this type.
+     * "uninitialized": No action has yet been yet for that SourceBuffer.
+     */
+    sourceBufferStatus: "initialized" | "uninitialized" | "disabled";
   };
 }
 
